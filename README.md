@@ -1,6 +1,6 @@
 # GAS_BentoStockApp
 
-このプロジェクトは、[#すそのんエール飯APP (https://susononyell.glideapp.io/)]の在庫状況を入力する専用Webアプリを作成するものである。
+このプロジェクトは、[#すそのんエール飯APP (https://susononyell.glideapp.io/)](https://susononyell.glideapp.io/)の在庫状況を入力する専用Webアプリを作成するものである。
 
 ## 背景
 
