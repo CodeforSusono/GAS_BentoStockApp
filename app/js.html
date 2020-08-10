@@ -1,0 +1,47 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<script>
+google.script.run.withSuccessHandler(initializeVue).getStockOnDB();
+
+function initializeVue(stockOnDB) {
+  
+  var app = new Vue({ 
+    el: '#board',
+    data: {
+      stock: stockOnDB,
+      sold: 0
+    },
+    methods: {
+      inc: function () {
+        this.sold += 1
+      },
+      dec: function() {
+        this.sold -= 1
+      },
+      clr: function() {
+        this.sold = 0
+      },
+      changeStock: function() {
+        if (this.sold==0) {
+          alert('在庫数に変更はありません');
+        } else {
+          this.stock = this.stock - this.sold;
+          this.sold = 0;
+          google.script.run.withSuccessHandler(function(data) {
+            alert('在庫数を'+data.toString()+'に変更しました');
+          }).setStockOnDB(this.stock);
+        }
+      }
+    }
+  });
+}
+</script>
+<script>
+$('#form-ticker-symbol').on("keypress", function(event){return leaveOnlyNumber(event);});
+
+function leaveOnlyNumber(e){
+  // 数字以外の不要な文字を削除
+  var st = String.fromCharCode(e.which);
+  if ("0123456789".indexOf(st,0) < 0) { return false; }
+  return true;  
+}
+</script>
