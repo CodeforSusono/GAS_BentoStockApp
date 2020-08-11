@@ -6,30 +6,41 @@
   </head>
   <body>
     <div class="container">
-      <nav class="nav">
-        <img src="https://drive.google.com/uc?id=%%Google Driveに配置した画像ファイルのID%%&jpg" height="30" width="30" >
+      <nav class="nav justify-content-center">
+        <img src="https://drive.google.com/uc?id=1lpdo2SILd3-Kjg9Y2CfFYsxa4IqD4_n-&jpg" height="30" width="30" >
         <h5>ドライブスルー弁当市場</h5>
       </nav>
-      <p style="text-align: center">お弁当在庫数通知システム</p>
       <div id="board">
-        <div id="information">
-          <h6>現在の在庫数:</h6>
-          <h6 style="text-align: right">{{ stock }}</h6>
-        </div>
-        <div class="form-group">
-          <h6>今回販売した数：</h6>
-          <input type="text" class="form-control" id="form-ticker-symbol" v-model="sold" style="text-align: right">
-        </div>
-        <div class="btn-toolbar" role="toolbar">
-          <div class="btn-group btn-block" role="group">
-            <button type="button" class="btn btn-outline-primary" v-on:click="inc" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ増やす">+1</button>
-            <button type="button" class="btn btn-outline-primary" v-on:click="dec" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ減らす">-1</button>
-            <button type="button" class="btn btn-outline-primary" v-on:click="clr" data-toggle="tooltip" data-placement="top" title="今回販売数を０にする">クリア</button>
+        <div v-for="(list, index) in lists" v-bind:key="list[3]" class="alert alert-info">
+          <div class="row">
+            <p class="col-7"><u>{{ list[0] }}</u></p>
+            <div v-if="list[1]>0" class="col-5 text-right"><mark>在庫:<span class="text-success">{{ list[1] }}</span></mark></div>
+            <div v-else-if="list[1]==0" class="col-5 text-danger text-right">販売終了</div>
           </div>
-          <div class="btn-group btn-block" role="group">
-            <button type="button" class="btn btn-outline-danger" v-on:click="changeStock" data-toggle="tooltip" data-placement="bottom" title="データベースを更新します">在庫数更新</button>
-          </div>
-        </div>           
+          <form>
+            <div class="form-row align-items-center">
+              <div class="input-group input-group-sm col-4 col-form-label">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">入力値</div>
+                </div>
+            　  <input type="text" disabled class="form-control text-center text-primary" v-bind:value="list[2]">
+              </div>
+              <div class="btn-group btn-group-sm col-6" role="group">
+                <button type="button" class="btn btn-outline-primary" v-on:click="inc(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ増やす">+1</button>
+                <button type="button" class="btn btn-outline-primary" v-on:click="dec(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ減らす">-1</button>
+                <button type="button" class="btn btn-outline-primary" v-on:click="clr(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を０にする">CLR</button>
+              </div>
+              <div class="btn-group btn-group-sm col-2">
+                <button type="button" class="btn btn-success" v-on:click="changeStock(index)" data-toggle="tooltip" data-placement="top" title="データベースを更新します">更新</button>
+              </div>
+              <transition name="fade">
+                <div class="message" v-if="message[index]">
+                  <p class="alert" v-bind:class="{'alert-danger': isError[index], 'alert-secondary': !isError[index]}" style="text-align: center">{{ message[index] }}</p>
+                </div>
+              </transition>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <?!= HtmlService.createHtmlOutputFromFile('js').getContent(); ?>

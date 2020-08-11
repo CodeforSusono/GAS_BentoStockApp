@@ -2,46 +2,65 @@
 <script>
 google.script.run.withSuccessHandler(initializeVue).getStockOnDB();
 
-function initializeVue(stockOnDB) {
+function initializeVue(ret) {
   
   var app = new Vue({ 
     el: '#board',
     data: {
-      stock: stockOnDB,
-      sold: 0
+      lists: ret[0],
+      message: ret[1],
+      isError: ret[2]
     },
     methods: {
-      inc: function () {
-        this.sold += 1
+      inc: function(index) {
+        this.lists[index][2] += 1;
+        this.lists.splice()
       },
-      dec: function() {
-        this.sold -= 1
+      dec: function(index) {
+        this.lists[index][2] -= 1;
+        this.lists.splice()
       },
-      clr: function() {
-        this.sold = 0
+      clr: function(index) {
+        this.lists[index][2] = 0;
+        this.lists.splice()
       },
-      changeStock: function() {
-        if (this.sold==0) {
-          alert('在庫数に変更はありません');
-        } else {
-          this.stock = this.stock - this.sold;
-          this.sold = 0;
+      changeStock: function(index) {
+        if (this.lists[index][2]==0) {
+          this.message[index] = '在庫数に変更はありません';
+          this.message.splice();
+          this.isError[index] = false;
+          this.isError.splice();
+          setTimeout(() => {this.message[index] = false; this.message.splice()}, 1000);
+        } else if (this.lists[index][1] == 0 && this.lists[index][2] >= 0) {
+          this.message[index] = '在庫がないため、販売数を登録できません';
+          this.message.splice();
+          this.isError[index] = true;
+          this.isError.splice();
+          setTimeout(() => {this.message[index] = false; this.message.splice()}, 2000);
+        } else if (this.lists[index][1] < this.lists[index][2]) {
+          this.message[index] = '販売数'+this.lists[index][2].toString()+'が在庫数'+this.lists[index][1].toString()+'を超えることはできません';
+          this.message.splice();
+          this.isError[index] = true;
+          this.isError.splice();
+          setTimeout(() => {this.message[index] = false; this.message.splice()}, 2000);
+        } else { 
+          this.lists[index][1] -= this.lists[index][2];
+          this.lists[index][2] = 0;
+          this.lists.splice();
+          this.message[index] = '在庫数 '+this.lists[index][1].toString()+' を DB に登録します';
+          this.message.splice();
+          this.isError[index] = false;
+          this.isError.splice();
+          setTimeout(() => {this.message[index] = false; this.message.splice()}, 1000);
           google.script.run.withSuccessHandler(function(data) {
-            alert('在庫数を'+data.toString()+'に変更しました');
-          }).setStockOnDB(this.stock);
+            alert('DBに在庫数 '+data.toString()+' を登録しました');
+          }).setStockOnDB(this.lists[index][1],index,1);
         }
+      },
+      validate: function(index) {
+        this.sold = this.sold.replace(/\D/g, '')
       }
     }
   });
-}
-</script>
-<script>
-$('#form-ticker-symbol').on("keypress", function(event){return leaveOnlyNumber(event);});
-
-function leaveOnlyNumber(e){
-  // 数字以外の不要な文字を削除
-  var st = String.fromCharCode(e.which);
-  if ("0123456789".indexOf(st,0) < 0) { return false; }
-  return true;  
 }
 </script>
