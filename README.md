@@ -38,3 +38,7 @@ Google Spread Sheet内のデータをWebアプリから更新するため、Goog
 
 <img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_1.png" width="300" title="初回バージョン(Android Chrome)"/>
 
+- プルダウン版WebApp
+
+<img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_2_1.png" width="300" title="プルダウン版起動直後"/> <img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_2_2.png" width="300" title="お弁当選択"/> <img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_2_3.png" width="300" title="お弁当選択後"/> <img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_2_4.png" width="300" title="販売数量入力"/> <img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_2_5.png" width="300" title="在庫更新後"/> 
+
