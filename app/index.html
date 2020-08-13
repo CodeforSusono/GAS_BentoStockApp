@@ -19,18 +19,16 @@
           </div>
           <form>
             <div class="form-row align-items-center">
-              <div class="input-group input-group-sm col-4 col-form-label">
+              <div class="input-group input-group-sm col-sm-4 col-form-label">
                 <div class="input-group-prepend">
-                  <div class="input-group-text">入力値</div>
+                  <div class="input-group-text">今回販売数</div>
                 </div>
             　  <input type="text" disabled class="form-control text-center text-primary" v-bind:value="list[2]">
               </div>
-              <div class="btn-group btn-group-sm col-6" role="group">
+              <div class="btn-group btn-group-sm col-sm-8" role="group">
                 <button type="button" class="btn btn-outline-primary" v-on:click="inc(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ増やす">+1</button>
                 <button type="button" class="btn btn-outline-primary" v-on:click="dec(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ減らす">-1</button>
                 <button type="button" class="btn btn-outline-primary" v-on:click="clr(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を０にする">CLR</button>
-              </div>
-              <div class="btn-group btn-group-sm col-2">
                 <button type="button" class="btn btn-success" v-on:click="changeStock(index)" data-toggle="tooltip" data-placement="top" title="データベースを更新します">更新</button>
               </div>
               <transition name="fade">
