@@ -20,9 +20,36 @@
 
 #すそのんエール飯ドライブスルー弁当市場をターゲットに、在庫入力作業をミスなく効率的に行うための専用Webアプリを構築することが、本プロジェクトの目的である。
 
-## 実行環境＆開発環境
+## 開発環境
 
 Google Spread Sheet内のデータをWebアプリから更新するため、Google Apps Scriptを用いてWebアプリを構築する。
+
+### 開発環境の構築手順
+
+ここで公開しているappフォルダ以下のファイルを使い、GASによるWebAppを動作させる手順について記述する。
+
+**前提条件**
+- Google アカウントを取得済み
+
+**手順**
+1. デスクトップPCを立ち上げChromeを起動する
+1. Google アカウントにログインし、[Google Drive]
+(https://drive.google.com/drive/my-drive)にアクセスする
+1. [+新規]ボタンを押し、[その他]>[Google Apps Script]を選択する
+1. ”無題のプロジェクト”が開くので、プロジェクト名を適切な名前に変更する
+1. ライブラリunderscore[参照先](https://github.com/simula-innovation/gas-underscore)を導入する
+    1. [リソース]>[ライブラリ]を選択する
+    1. ”Add a library”欄に"M3i7wmUA_5n0NSEaa6NnNqOBao7QLBR4j"を張り付け、最新版を有効にする
+1. "main.gs"ファイルの作成
+    1. ”コード.gs”に”app/main.gs”の中身をコピーし置き換える
+    1. ”コード.gs”を"main.gs"にrenameする
+1. "index.html"ファイルの作成
+    1. [ファイル]>[New]>[HTMLファイル]を選択する
+    1. ”Create File”のウィンドウが表示されるので、"Enter new file name"欄にindexと入力し、[OK]ボタンを押す
+    1. "index.html"が表示されるので、"app/index.html"の中身をコピーし置き換える
+1. 同様に、"css.html"、"js.html"を作成する
+1. [ファイル]>[すべてを保存]を選択する
+1. [公開]>[ウェブアプリケーションとして導入]を選択し、必要事項を入力し公開する
 
 ## 開発状況
 
