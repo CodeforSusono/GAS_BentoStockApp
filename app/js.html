@@ -1,6 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 <script>
-google.script.run.withSuccessHandler(initializeVue).getStockOnDB();
+google.script.run.withSuccessHandler(initializeVue).getInitialData();
 
 function initializeVue(ret) {
   
@@ -24,6 +24,16 @@ function initializeVue(ret) {
         this.lists[index][2] = 0;
         this.lists.splice()
       },
+      update: function(data) {
+        if (data[0]) {
+          this.lists[data[2]][1] = data[1];
+          this.lists[data[2]][2] = 0;
+          this.lists.splice();
+          alert('在庫数 '+data[1].toString()+' に更新しました');
+        } else {
+          alert('データを更新できませんでした。再度更新してください');
+        }  
+      },
       changeStock: function(index) {
         if (this.lists[index][2]==0) {
           this.message[index] = '在庫数に変更はありません';
@@ -43,22 +53,14 @@ function initializeVue(ret) {
           this.isError[index] = true;
           this.isError.splice();
           setTimeout(() => {this.message[index] = false; this.message.splice()}, 2000);
-        } else { 
-          this.lists[index][1] -= this.lists[index][2];
-          this.lists[index][2] = 0;
-          this.lists.splice();
-          this.message[index] = '在庫数 '+this.lists[index][1].toString()+' を DB に登録します';
+        } else {
+          this.message[index] = '販売数 '+this.lists[index][2].toString()+' を登録します';
           this.message.splice();
           this.isError[index] = false;
           this.isError.splice();
           setTimeout(() => {this.message[index] = false; this.message.splice()}, 1000);
-          google.script.run.withSuccessHandler(function(data) {
-            alert('DBに在庫数 '+data.toString()+' を登録しました');
-          }).setStockOnDB(this.lists[index][1],index,1);
+          google.script.run.withSuccessHandler(this.update).setStockOnDB(this.lists[index][2],index);
         }
-      },
-      validate: function(index) {
-        this.sold = this.sold.replace(/\D/g, '')
       }
     }
   });
