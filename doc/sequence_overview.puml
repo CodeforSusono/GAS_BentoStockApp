@@ -2,7 +2,6 @@
 actor 入力担当者
 boundary ブラウザ
 control 在庫管理WebApp
-control LockService
 entity GoogleSpreadSheet
 
 == 初期起動シーケンス ==
@@ -35,16 +34,10 @@ autonumber "[200]"
 alt 販売数==0のとき
 ブラウザ -> ブラウザ : 「在庫数に変更はありません」と表示
 else 販売数<>0のとき
-ブラウザ -> 在庫管理WebApp : 販売数を与え、在庫数の更新を依頼
-在庫管理WebApp -> LockService : GoogleSpreadSheetの排他ロックを取得
-note left
-  https://developers.google.com/apps-script/reference/lock
-end note
-在庫管理WebApp -> GoogleSpreadSheet : 現在の在庫数を取得
-在庫管理WebApp -> GoogleSpreadSheet : 在庫数を（在庫数-販売数）に書換
-在庫管理WebApp -> LockService : GoogleSpreadSheetの排他ロックを解除
-在庫管理WebApp  --> ブラウザ : 新在庫数を通知
-ブラウザ -> ブラウザ : 在庫数を新在庫数に更新
+ブラウザ -> ブラウザ : 在庫数を（在庫数-販売数）に書換
+ブラウザ -> GoogleSpreadSheet : 在庫数変更
+GoogleSpreadSheet --> ブラウザ : 新在庫数
+ブラウザ -> ブラウザ : 「在庫数を（新在庫数）に変更しました」と表示
 end
 
 @enduml
