@@ -7,7 +7,7 @@
   <body>
     <div class="container">
       <nav class="nav justify-content-center">
-        <img src="https://drive.google.com/uc?id=1lpdo2SILd3-Kjg9Y2CfFYsxa4IqD4_n-&jpg" height="30" width="30" >
+        <img src="https://drive.google.com/uc?id=%%GoogleDriveに配置した画像ファイルのID%%&jpg" height="30" width="30" >
         <h5>ドライブスルー弁当市場</h5>
       </nav>
       <div id="board">
@@ -15,7 +15,10 @@
           <div class="row">
             <p class="col-7"><u>{{ list[0] }}</u></p>
             <div class="col-5 text-right">
-              <mark v-if="list[1]>0" >在庫:<span class="text-success">{{ list[1] }}</span></mark>
+              <mark v-if="list[1]>0" >在庫:
+                <span v-show="loading" class="text-danger">Now loading...</span>
+                <span v-show="!loading" class="text-success">{{ list[1] }}</span>
+              </mark>
               <mark v-else class="border border-danger text-danger">在庫:<span class="text-danger font-weight-bold">{{ list[1] }}</span></mark>
             </div>
           </div>
@@ -32,7 +35,7 @@
                 <button type="button" class="btn btn-outline-primary" v-on:click="inc(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ増やす">+1</button>
                 <button type="button" class="btn btn-outline-primary" v-on:click="dec(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ減らす">-1</button>
                 <button type="button" class="btn btn-outline-primary" v-on:click="clr(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を０にする">CLR</button>
-                <button type="button" class="btn btn-success" v-on:click="changeStock(index)" data-toggle="tooltip" data-placement="top" title="データベースを更新します">更新</button>
+                <button v-bind:disabled="loading" type="button" class="btn btn-success" v-on:click="changeStock(index)" data-toggle="tooltip" data-placement="top" title="データベースを更新します">更新</button>
               </div>
               <transition name="fade">
                 <div class="message" v-if="message[index]">

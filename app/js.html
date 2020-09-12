@@ -9,7 +9,8 @@ function initializeVue(ret) {
     data: {
       lists: ret[0],
       message: ret[1],
-      isError: ret[2]
+      isError: ret[2],
+      loading: false
     },
     methods: {
       inc: function(index) {
@@ -29,10 +30,11 @@ function initializeVue(ret) {
           this.lists[data[2]][1] = data[1];
           this.lists[data[2]][2] = 0;
           this.lists.splice();
-          alert('在庫数 '+data[1].toString()+' に更新しました');
+          //alert('在庫数 '+data[1].toString()+' に更新しました');
         } else {
           alert('データを更新できませんでした。再度更新してください');
-        }  
+        }
+        this.loading = false;
       },
       changeStock: function(index) {
         if (this.lists[index][2]==0) {
@@ -58,6 +60,7 @@ function initializeVue(ret) {
           this.message.splice();
           this.isError[index] = false;
           this.isError.splice();
+          this.loading = true;
           setTimeout(() => {this.message[index] = false; this.message.splice()}, 1000);
           google.script.run.withSuccessHandler(this.update).setStockOnDB(this.lists[index][2],index);
         }
