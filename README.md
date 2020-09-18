@@ -80,3 +80,14 @@ Google Spread Sheet内のデータをWebアプリから更新するため、Goog
 <kbd><img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_3_3.png" width="200" title="お弁当在庫更新"/></kbd>
 <kbd><img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_3_4.png" width="200" title="在庫分販売"/></kbd>
 <kbd><img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_3_5.png" width="200" title="在庫終了"/></kbd> 
+
+### バージョン第2版
+
+2020/8/22(土) に初回バージョンで本番を迎えた。
+会場である裾野市民文化センターには100台以上車両が来場し、お弁当を購入された。
+その際、どのお弁当を購入するか1台づつ回って確認し、スマホをスクロールし
+入力していったため、入力者の指が悲鳴をあげることになってしまった・・・。
+この改善策として、タブレットを使い横2列表示に変更を行い第2版を作成。
+この第2版で本番は10/17(土)を予定している。
+
+<kbd><img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_4_Tablet.png" width="200" title="第2版タブレット横2列表示"/></kbd> 
