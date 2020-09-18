@@ -90,4 +90,4 @@ Google Spread Sheet内のデータをWebアプリから更新するため、Goog
 この改善策として、タブレットを使い横2列表示に変更を行い第2版を作成。
 この第2版で本番は10/17(土)を予定している。
 
-<kbd><img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_4_Tablet.png" width="200" title="第2版タブレット横2列表示"/></kbd> 
+<kbd><img src="https://github.com/CodeforSusono/GAS_BentoStockApp/raw/master/doc/image/WebAppImage_4_Tablet.png" width="500" title="第2版タブレット横2列表示"/></kbd> 
