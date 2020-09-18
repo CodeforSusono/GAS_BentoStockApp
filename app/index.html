@@ -1,52 +1,55 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <base target="_top">
-    <?!= HtmlService.createHtmlOutputFromFile('css').getContent(); ?>
-  </head>
-  <body>
-    <div class="container">
-      <nav class="nav justify-content-center">
-        <img src="https://drive.google.com/uc?id=%%GoogleDriveに配置した画像ファイルのID%%&jpg" height="30" width="30" >
-        <h5>ドライブスルー弁当市場</h5>
-      </nav>
-      <div id="board">
-        <div v-for="(list, index) in lists" v-bind:key="list[3]" class="alert alert-info">
-          <div class="row">
-            <p class="col-7"><u>{{ list[0] }}</u></p>
-            <div class="col-5 text-right">
-              <mark v-if="list[1]>0" >在庫:
-                <span v-show="loading" class="text-danger">Now loading...</span>
-                <span v-show="!loading" class="text-success">{{ list[1] }}</span>
-              </mark>
-              <mark v-else class="border border-danger text-danger">在庫:<span class="text-danger font-weight-bold">{{ list[1] }}</span></mark>
-            </div>
-          </div>
-          <form>
-            <div class="form-row align-items-center">
-              <div class="input-group input-group-sm col-sm-4 col-form-label">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">今回販売数</div>
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <base target="_top">
+            <?!= HtmlService.createHtmlOutputFromFile('css').getContent(); ?>
+          </head>
+          <body>
+            <div class="container-fluid">
+              <nav class="nav justify-content-center">
+                <img src="https://drive.google.com/uc?id=%%GoogleDriveに配置した画像ファイルのID%%&jpg" height="30" width="30" >
+                <h5>ドライブスルー弁当市場</h5>
+              </nav>
+              <div id="board">
+                <div class="row">
+                <div v-for="(list, index) in lists" v-bind:key="list[3]" class="alert alert-info col-sm-6 col-xl-6">
+                  <div class="row">
+                    <p class="col-8"><u>{{ list[0] }}</u></p>
+                    <div class="col-4 text-right">
+                      <mark v-if="list[1]>0" >在庫:
+                        <span v-show="loading" class="text-danger">Now loading...</span>
+                        <span v-show="!loading" class="text-success">{{ list[1] }}</span>
+                      </mark>
+                      <mark v-else class="border border-danger text-danger">在庫:<span class="text-danger font-weight-bold">{{ list[1] }}</span></mark>
+                    </div>
+                  </div>
+                  <form>
+                    <div class="form-row align-items-center">
+                      <div class="input-group input-group-sm col-4 col-form-label">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">販売数</div>
+                        </div>
+                    　  <input v-if="list[2]==0" type="text" disabled class="form-control text-center text-primary" v-bind:value="list[2]">
+                        <input v-else type="text" disabled class="form-control text-center text-danger font-weight-bold border border-danger" v-bind:value="list[2]">
+                      </div>
+                      <div class="btn-group btn-group-sm col-8" role="group">
+                        <button type="button" class="btn btn-outline-primary" v-on:click="inc(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ増やす">+1</button>
+                        <button type="button" class="btn btn-outline-primary" v-on:click="dec(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ減らす">-1</button>
+                        <button type="button" class="btn btn-outline-primary" v-on:click="clr(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を０にする">CLR</button>
+                        <button v-bind:disabled="loading" type="button" class="btn btn-success" v-on:click="changeStock(index)" data-toggle="tooltip" data-placement="top" title="データベースを更新します">更新</button>
+                      </div>
+                      <transition name="fade">
+                        <div class="message" v-if="message[index]">
+                          <p class="alert" v-bind:class="{'alert-danger': isError[index], 'alert-secondary': !isError[index]}" style="text-align: center">{{ message[index] }}</p>
+                        </div>
+                      </transition>
+                     </div>
+                  </form>
                 </div>
-            　  <input v-if="list[2]==0" type="text" disabled class="form-control text-center text-primary" v-bind:value="list[2]">
-                <input v-else type="text" disabled class="form-control text-center text-danger font-weight-bold border border-danger" v-bind:value="list[2]">
-              </div>
-              <div class="btn-group btn-group-sm col-sm-8" role="group">
-                <button type="button" class="btn btn-outline-primary" v-on:click="inc(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ増やす">+1</button>
-                <button type="button" class="btn btn-outline-primary" v-on:click="dec(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を１つ減らす">-1</button>
-                <button type="button" class="btn btn-outline-primary" v-on:click="clr(index)" data-toggle="tooltip" data-placement="top" title="今回販売数を０にする">CLR</button>
-                <button v-bind:disabled="loading" type="button" class="btn btn-success" v-on:click="changeStock(index)" data-toggle="tooltip" data-placement="top" title="データベースを更新します">更新</button>
-              </div>
-              <transition name="fade">
-                <div class="message" v-if="message[index]">
-                  <p class="alert" v-bind:class="{'alert-danger': isError[index], 'alert-secondary': !isError[index]}" style="text-align: center">{{ message[index] }}</p>
                 </div>
-              </transition>
+              </div>
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <?!= HtmlService.createHtmlOutputFromFile('js').getContent(); ?>
-  </body>
-</html>
+            <?!= HtmlService.createHtmlOutputFromFile('js').getContent(); ?>
+          </body>
+        </html>
+        
