@@ -27,12 +27,20 @@ function initializeVue(ret) {
       },
       update: function(data) {
         if (data[0]) {
+          // 正常に更新できたとき
           this.lists[data[2]][1] = data[1];
           this.lists[data[2]][2] = 0;
           this.lists.splice();
           //alert('在庫数 '+data[1].toString()+' に更新しました');
         } else {
-          alert('データを更新できませんでした。再度更新してください');
+          if (data[3] == -999) {
+            // 在庫数<販売数だった
+            this.lists[data[2]][1] = data[1];
+            alert('他で更新されたため、在庫数<販売数となりました。販売数を確認して下さい')
+          } else if (data[3] == -888) {
+            // ロック取得できず
+            alert('ロックが取得できず、更新できませでした。再度更新して下さい');
+          }
         }
         this.loading = false;
       },

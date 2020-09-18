@@ -61,12 +61,19 @@ function setStockOnDB(sold, idx) {
   if (lock.tryLock(2000)) {
     var range = SpreadsheetApp.openById(mySheetId).getSheetByName(mySheetName).getRange(row_stock,idx+col_offset);
     stock = range.getValue();
-    range.setValue( stock-sold );
-    lock.releaseLock();
-    ret = [true, stock-sold, idx, stock, sold];
+    if (stock < sold) {
+      // 在庫が更新されたため、販売数＞在庫数となったので、在庫は更新せず終了
+      lock.releaseLock();
+      ret = [false, stock, idx, -999];
+    } else {
+      // 在庫を更新
+      range.setValue( stock-sold );
+      lock.releaseLock();
+      ret = [true, stock-sold, idx, stock, sold];
+    }
   } else {
     Logger.log('ロックできません');
-    ret = [false, sold, idx];
+    ret = [false, sold, idx, -888];
   }
   Logger.log( ret );
   return ret;
